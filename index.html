@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aim Test</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .grid-container {
+            padding-top: 200px;
+            display: grid;
+            grid-template-columns: repeat(20, 30px);
+            grid-template-rows: repeat(20, 30px);
+            gap: 5px; /* Jarak antar kotak */
+        }
+
+        .box {
+            width: 30px;
+            height: 30px;
+            background-color: #3498db;
+            border-radius: 5px; /* Border radius 5px */
+            transition: background-color 0.5s ease; /* Animasi perubahan warna */
+        }
+
+        .box.green {
+            background-color: #2ecc71; /* Warna hijau tanpa transisi */
+            transition: none; /* Hilangkan animasi untuk kotak hijau */
+        }
+
+        .box.red {
+            background-color: #e74c3c; /* Warna merah */
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container" id="grid-container">
+        <!-- Kotak akan dihasilkan secara dinamis menggunakan JavaScript -->
+    </div>
+
+    <script>
+        const gridContainer = document.getElementById('grid-container');
+        const totalBoxes = 200;
+
+        // Generate 400 boxes
+        for (let i = 0; i < totalBoxes; i++) {
+            const box = document.createElement('div');
+            box.className = 'box';
+            gridContainer.appendChild(box);
+        }
+
+        // Function to set a random box to green
+        function setRandomGreenBox() {
+            const boxes = document.querySelectorAll('.box');
+            const randomIndex = Math.floor(Math.random() * totalBoxes);
+            boxes[randomIndex].classList.add('green');
+        }
+
+        // Initially set one random box to green
+        setRandomGreenBox();
+
+        // Add click event listener to grid container
+        gridContainer.addEventListener('click', function(event) {
+            const target = event.target;
+
+            if (target.classList.contains('green')) {
+                // When green box is clicked, remove green class and set another random box to green
+                target.classList.remove('green');
+                setRandomGreenBox();
+            } else if (target.classList.contains('box')) {
+                // If a blue box is clicked, temporarily change to red
+                target.classList.add('red');
+                setTimeout(() => {
+                    target.classList.remove('red');
+                }, 400);
+            }
+        });
+    </script>
+</body>
+</html>
